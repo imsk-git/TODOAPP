@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-
+from django.db.models import Q
 from todoapp.forms import TodoForm
 from todoapp.models import Todo
 from django.contrib.auth.models import User
@@ -101,12 +101,19 @@ def details(request,id):
     except:
         return redirect('/home')
 
-# def search(request):
-#     search_query = request.GET.get('search_query')
-#     if search_query:
-#         todo = Todo.objects.filter(title__icontains=search_query)
-#     else:
-#         todo = None
-#     return render(request,'index.html',{'todo':todo})
+
+def search(request):
+    query = request.GET.get('query')
+    try:
+        todos = Todo.objects.filter(Q(title__icontains=query) & Q(user = request.user))
+        
+    except:
+        todos = []
+    context = {
+        'todos' : todos
+    }
+    return render(request, 'todoapp/index.html', context)
+
+ 
 
 

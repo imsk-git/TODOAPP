@@ -149,8 +149,8 @@
                 </ul>
               </li>
             </ul>
-            <form class="d-flex">
-              <input class="form-control me-2" type="search" placeholder="Search your task here.." aria-label="Search" > 
+            <form class="d-flex" action="{% url 'search' %}">
+              <input class="form-control me-2" type="search" placeholder="Search your task here.." aria-label="Search" name="query"  > 
               <!-- value="{{request.GET.search_query}} -->
              
               <button class="btn btn-outline-dark" type="submit">Search</button>
@@ -180,7 +180,7 @@
                     <div class="row align-items-center">
                         <div class="col">
                             {% if todo.completed_status %}
-                                <strike> <p>{{todo.id}}.<a href="{% url 'details' todo.id %}" class="completed">{{ todo.title }}</a></strike></p>
+                                <strike> <p>{{forloop.counter}}.<a href="{% url 'details' todo.id %}" class="completed">{{ todo.title }}</a></strike></p>
                             {% else %} 
                             <p>{{todo.id}}.<a href="{% url 'details' todo.id %}" class="">{{ todo.title }}</a></p>
                             {% endif %}
